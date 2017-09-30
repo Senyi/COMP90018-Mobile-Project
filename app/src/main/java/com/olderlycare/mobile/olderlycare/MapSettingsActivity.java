@@ -1,6 +1,7 @@
 package com.olderlycare.mobile.olderlycare;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -54,11 +56,11 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    LatLng DefaultHOME = new LatLng(-33.92, 151.25);
-    double homelatitude = DefaultHOME.latitude;
-    double homelongitude = DefaultHOME.longitude;
+    LatLng HOME;
+    double homelatitude = 0.0;
+    double homelongitude = 0.0;
 
-    LatLng NewHOME;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +83,50 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         Button returnbtn = (Button) findViewById(R.id.button_return);
 
         savebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                                       @Override
+                                       public void onClick(View v) {
+                                           new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
 
-                Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
-                startActivity(resultIntent);
-            }
-        });
+                                                   .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
+
+                                                   .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                                                       @Override
+                                                       public void onClick(DialogInterface dialogInterface, int i) {
+                                                           Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                                           Intent Intent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+                                                           Intent.putExtra("latitude", homelatitude);
+                                                           Intent.putExtra("longitude", homelongitude);
+                                                           setResult(0, Intent);
+                                                           finish();
+
+                                                       }
+                                                   }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+
+                                               @Override
+
+                                               public void onClick(DialogInterface dialog, int which) {
+
+                                                   Log.i("alertdialog", " Please save the home location");
+
+                                               }
+
+                                           }).show();//在按键响应事件中显示此对话框
+                                       }
+
+                                   });
+
 
         returnbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(MapSettingsActivity.this, MapsActivity.class);
-                startActivity(intent);
+                Toast.makeText(MapSettingsActivity.this, "Home location is not changed!",Toast.LENGTH_SHORT).show();
+                Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+
+                setResult(1,resultIntent);
+                finish();
             }
         });
     }
@@ -159,9 +191,11 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
 
                 // Add new marker to the Google Map Android API V2
                 mMap.addMarker(options);
-                NewHOME = MarkerPoints.get(0);
-                homelatitude = NewHOME.latitude;
-                homelongitude = NewHOME.longitude;
+                HOME = MarkerPoints.get(0);
+                homelatitude = HOME.latitude;
+                homelongitude = HOME.longitude;
+                Log.d("Pointlocation",Double.toString(homelatitude)+Double.toString(homelongitude));
+
 
             }
         });
@@ -384,8 +418,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13.8f));
 
         //stop location updates
         if (mGoogleApiClient != null) {

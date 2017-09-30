@@ -57,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    LatLng Home;
     double homelatitude = -37.8101;
     double homelongitude = 144.9626;
     private boolean showHome = false;
@@ -86,10 +87,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         settingsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mMap.clear();
+                showHome = false;
                 Intent intent = new Intent(MapsActivity.this, MapSettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 0);
             }
         });
+
 
         homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,19 +101,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (!showHome) {
                     Drawable myDrawable = getResources().getDrawable(R.drawable.home);
                     Bitmap myLogo = ((BitmapDrawable) myDrawable).getBitmap();
-                    LatLng HOME = new LatLng(homelatitude, homelongitude);
+                    Home = new LatLng(homelatitude, homelongitude);
+                    Toast.makeText(MapsActivity.this, "Home navigation starts",Toast.LENGTH_SHORT).show();
+                    Log.d("location",Double.toString(homelatitude));
+                    Log.d("location",Double.toString(homelongitude));
+//                    Log.d(String.format("location: %f",homelatitude));
                     myLogo = Bitmap.createScaledBitmap(myLogo, myLogo.getWidth() / 3, myLogo.getHeight() / 3, false);
                     mMap.addMarker(new MarkerOptions()
-                            .position(HOME)
+                            .position(Home)
                             .title("Your Home is Here! ")
                             .icon(BitmapDescriptorFactory.fromBitmap(myLogo)));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HOME,11f));
+                    //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
                     onLocationChanged(mLastLocation);
                     LatLng origin = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    LatLng dest = HOME;
+                    LatLng dest = Home;
                     // Getting URL to the Google Directions API
                     String url = getUrl(origin, dest);
-                    Log.d("GoHomeButtonClick", url.toString());
+                    //Log.d("GoHomeButtonClick", url.toString());
                     FetchUrl FetchUrl = new FetchUrl();
 
                     // Start downloading json data from Google Directions API
@@ -209,11 +217,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             data = sb.toString();
-            Log.d("downloadUrl", data.toString());
+            //Log.d("downloadUrl", data.toString());
             br.close();
 
         } catch (Exception e) {
-            Log.d("Exception", e.toString());
+            //Log.d("Exception", e.toString());
         } finally {
             iStream.close();
             urlConnection.disconnect();
@@ -233,9 +241,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             try {
                 // Fetching the data from web service
                 data = downloadUrl(url[0]);
-                Log.d("Background Task data", data.toString());
+                //Log.d("Background Task data", data.toString());
             } catch (Exception e) {
-                Log.d("Background Task", e.toString());
+               // Log.d("Background Task", e.toString());
             }
             return data;
         }
@@ -266,17 +274,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask", jsonData[0].toString());
+                //Log.d("ParserTask", jsonData[0].toString());
                 DataParser parser = new DataParser();
-                Log.d("ParserTask", parser.toString());
+                //Log.d("ParserTask", parser.toString());
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask", "Executing routes");
-                Log.d("ParserTask", routes.toString());
+                //Log.d("ParserTask", "Executing routes");
+                //Log.d("ParserTask", routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask", e.toString());
+                //Log.d("ParserTask", e.toString());
                 e.printStackTrace();
             }
             return routes;
@@ -312,7 +320,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 lineOptions.width(10);
                 lineOptions.color(Color.RED);
 
-                Log.d("onPostExecute", "onPostExecute lineoptions decoded");
+                //Log.d("onPostExecute", "onPostExecute lineoptions decoded");
 
             }
 
@@ -320,7 +328,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (lineOptions != null) {
                 mMap.addPolyline(lineOptions);
             } else {
-                Log.d("onPostExecute", "without Polylines drawn");
+                //Log.d("onPostExecute", "without Polylines drawn");
             }
         }
     }
@@ -371,8 +379,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13.8f));
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -452,4 +459,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0 && resultCode == 0) {
+
+            Bundle LocationBuddle = data.getExtras();
+            homelatitude = LocationBuddle.getDouble("latitude");
+            homelongitude = LocationBuddle.getDouble("longitude");
+            Log.d("location", Double.toString(homelatitude) + Double.toString(homelongitude));
+        }
+
+        else if (requestCode == 0 && resultCode == 1) {
+            homelatitude = Home.latitude;
+            homelongitude = Home.longitude;
+            Log.d("location", Double.toString(homelatitude) + Double.toString(homelongitude));
+        }
+
+    }
 }
