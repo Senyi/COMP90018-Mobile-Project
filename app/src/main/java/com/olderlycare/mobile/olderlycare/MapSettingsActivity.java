@@ -59,6 +59,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
     LatLng HOME;
     double homelatitude = 0.0;
     double homelongitude = 0.0;
+    Boolean isMarker = false;
 
 
 
@@ -85,35 +86,41 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         savebtn.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
-                                           new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
+                                           if (isMarker) {
 
-                                                   .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
+                                               new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
 
-                                                   .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                       .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
 
-                                                       @Override
-                                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                                           Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                                           Intent Intent = new Intent(MapSettingsActivity.this, MapsActivity.class);
-                                                           Intent.putExtra("latitude", homelatitude);
-                                                           Intent.putExtra("longitude", homelongitude);
-                                                           setResult(0, Intent);
-                                                           finish();
+                                                       .setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-                                                       }
-                                                   }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                           @Override
+                                                           public void onClick(DialogInterface dialogInterface, int i) {
+                                                               Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                                               Intent Intent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+                                                               Intent.putExtra("latitude", homelatitude);
+                                                               Intent.putExtra("longitude", homelongitude);
+                                                               setResult(0, Intent);
+                                                               finish();
+
+                                                           }
+                                                       }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
 
-                                               @Override
+                                                   @Override
 
-                                               public void onClick(DialogInterface dialog, int which) {
+                                                   public void onClick(DialogInterface dialog, int which) {
 
-                                                   Log.i("alertdialog", " Please save the home location");
+                                                   }
 
-                                               }
-
-                                           }).show();//在按键响应事件中显示此对话框
+                                               }).show();//在按键响应事件中显示此对话框
+                                           }
+                                           else
+                                           {
+                                               Toast.makeText(MapSettingsActivity.this, "You must choose one location!", Toast.LENGTH_SHORT).show();
+                                           }
                                        }
+
 
                                    });
 
@@ -173,6 +180,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
 
                 // Adding new item to the ArrayList
                 MarkerPoints.add(point);
+                isMarker = true;
 
                 // Creating MarkerOptions
                 MarkerOptions options = new MarkerOptions();
