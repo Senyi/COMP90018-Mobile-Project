@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.olderlycare.mobile.olderlycare.WeatherActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <ImageView
+        android:id="@+id/sixthDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/fifthDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp"
+         />
+
+    <ImageView
+        android:id="@+id/seventhDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/sixthDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp"
+         />
+
+    <ImageView
+        android:id="@+id/fifthDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/fourthDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp"
+         />
+
+    <ImageView
+        android:id="@+id/todayIcon"
+        android:layout_width="118dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Condition"
+         />
+
+    <TextView
+        android:id="@+id/Temp"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:text="temperature"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/Location"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/Location"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginTop="16dp"
+        android:text="Location"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/todayIcon"
+ />
+
+    <TextView
+        android:id="@+id/Condition"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:text="Condition"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/firstDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Temp" />
+
+    <TextView
+        android:id="@+id/firstDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="1H"
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstDayIcon" />
+
+    <TextView
+        android:id="@+id/firstDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="12dp"
+        android:text="1D"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstDayLow" />
+
+    <TextView
+        android:id="@+id/secondDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="2D"
+        app:layout_constraintLeft_toRightOf="@+id/firstDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/secondDayLow" />
+
+    <TextView
+        android:id="@+id/firstDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="11dp"
+        android:text="1L"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firstDayHigh" />
+
+    <ImageView
+        android:id="@+id/yahooLogo"
+        android:layout_width="134dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="449dp" />
+
+    <ImageView
+        android:id="@+id/secondDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/firstDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp" />
+
+    <ImageView
+        android:id="@+id/thirdDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/secondDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp" />
+
+    <ImageView
+        android:id="@+id/fourthDayIcon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@+id/thirdDayIcon"
+        app:layout_constraintTop_toBottomOf="@+id/Temp" />
+
+    <TextView
+        android:id="@+id/secondDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="2H"
+        app:layout_constraintLeft_toRightOf="@+id/firstDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/secondDayIcon" />
+
+    <TextView
+        android:id="@+id/secondDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="2L"
+        app:layout_constraintLeft_toRightOf="@+id/firstDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/secondDayHigh" />
+
+    <TextView
+        android:id="@+id/thirdDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="3H"
+        app:layout_constraintLeft_toRightOf="@+id/secondDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/thirdDayIcon" />
+
+    <TextView
+        android:id="@+id/thirdDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="3L"
+        app:layout_constraintLeft_toRightOf="@+id/secondDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/thirdDayHigh" />
+
+    <TextView
+        android:id="@+id/thirdDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="3D"
+        app:layout_constraintLeft_toRightOf="@+id/secondDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/thirdDayLow" />
+
+    <TextView
+        android:id="@+id/fourthDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="4H"
+        app:layout_constraintLeft_toRightOf="@+id/thirdDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/fourthDayIcon" />
+
+    <TextView
+        android:id="@+id/fourthDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="4L"
+        app:layout_constraintLeft_toRightOf="@+id/thirdDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/fourthDayHigh" />
+
+    <TextView
+        android:id="@+id/fourthDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="4D"
+        app:layout_constraintLeft_toRightOf="@+id/thirdDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/fourthDayLow" />
+
+    <TextView
+        android:id="@+id/fifthDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="5H"
+        app:layout_constraintLeft_toRightOf="@+id/fourthDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/fifthDayIcon" />
+
+    <TextView
+        android:id="@+id/fifthDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="5L"
+        app:layout_constraintLeft_toRightOf="@+id/fourthDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/fifthDayHigh" />
+
+    <TextView
+        android:id="@+id/fifthDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="5D"
+        app:layout_constraintLeft_toRightOf="@+id/fourthDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/fifthDayLow" />
+
+    <TextView
+        android:id="@+id/sixthDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="6H"
+        app:layout_constraintLeft_toRightOf="@+id/fifthDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/sixthDayIcon" />
+
+    <TextView
+        android:id="@+id/sixthDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="6L"
+        app:layout_constraintLeft_toRightOf="@+id/fifthDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/sixthDayHigh" />
+
+    <TextView
+        android:id="@+id/sixthDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="6D"
+        app:layout_constraintLeft_toRightOf="@+id/fifthDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/sixthDayLow" />
+
+    <TextView
+        android:id="@+id/seventhDayHigh"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="14dp"
+        android:text="7H"
+        app:layout_constraintLeft_toRightOf="@+id/sixthDayHigh"
+        app:layout_constraintTop_toBottomOf="@+id/seventhDayIcon" />
+
+    <TextView
+        android:id="@+id/seventhDayLow"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="7L"
+        app:layout_constraintLeft_toRightOf="@+id/sixthDayLow"
+        app:layout_constraintTop_toBottomOf="@+id/seventhDayHigh" />
+
+    <TextView
+        android:id="@+id/seventhDayDay"
+        android:layout_width="32dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="12dp"
+        android:text="7D"
+        app:layout_constraintLeft_toRightOf="@+id/sixthDayDay"
+        app:layout_constraintTop_toBottomOf="@+id/seventhDayLow" />
+</android.support.constraint.ConstraintLayout>
