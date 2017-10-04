@@ -50,6 +50,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    DatabaseHelper myDb;
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     GoogleApiClient mGoogleApiClient;
@@ -57,6 +58,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     LatLng HOME;
+    boolean ismarker = false;
     double homelatitude = 0.0;
     double homelongitude = 0.0;
 
@@ -67,6 +69,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_settings);
 
+        myDb = new DatabaseHelper(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
@@ -85,37 +88,43 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         savebtn.setOnClickListener(new View.OnClickListener() {
                                        @Override
                                        public void onClick(View v) {
-                                           new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
+                                           if (ismarker) {
+                                               new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
 
-                                                   .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
+                                                       .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
 
-                                                   .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                       .setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-                                                       @Override
-                                                       public void onClick(DialogInterface dialogInterface, int i) {
-                                                           Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                                           Intent Intent = new Intent(MapSettingsActivity.this, MapsActivity.class);
-                                                           Intent.putExtra("latitude", homelatitude);
-                                                           Intent.putExtra("longitude", homelongitude);
-                                                           setResult(0, Intent);
-                                                           finish();
+                                                           @Override
+                                                           public void onClick(DialogInterface dialogInterface, int i) {
+                                                               Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
+                                                               Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+                                                               boolean isUpdate = myDb.updateData("HOME",homelatitude, homelongitude);
+                                                               startActivity(resultIntent);
+                                                               finish();
 
-                                                       }
-                                                   }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                           }
+                                                       }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
 
-                                               @Override
+                                                   @Override
 
-                                               public void onClick(DialogInterface dialog, int which) {
+                                                   public void onClick(DialogInterface dialog, int which) {
 
-                                                   Log.i("alertdialog", " Please save the home location");
+                                                       Log.i("alertdialog", " Please save the home location");
 
-                                               }
+                                                   }
 
-                                           }).show();//在按键响应事件中显示此对话框
+                                               }).show();
+                                           }
+                                           else
+                                           {
+                                               Toast.makeText(MapSettingsActivity.this, "You must choose one location!", Toast.LENGTH_SHORT).show();
+                                           }
                                        }
 
                                    });
+
 
 
         returnbtn.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +133,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
 
                 Toast.makeText(MapSettingsActivity.this, "Home location is not changed!",Toast.LENGTH_SHORT).show();
                 Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
-
-                setResult(1,resultIntent);
+                startActivity(resultIntent);
                 finish();
             }
         });
@@ -173,6 +181,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
 
                 // Adding new item to the ArrayList
                 MarkerPoints.add(point);
+                ismarker = true;
 
                 // Creating MarkerOptions
                 MarkerOptions options = new MarkerOptions();

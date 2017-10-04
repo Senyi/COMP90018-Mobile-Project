@@ -3,6 +3,7 @@ package com.olderlycare.mobile.olderlycare;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +15,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -51,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+
+    DatabaseHelper myDb;
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
     GoogleApiClient mGoogleApiClient;
@@ -58,14 +60,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     LatLng Home;
-    double homelatitude = -37.8101;
-    double homelongitude = 144.9626;
+    double homelatitude;
+    double homelongitude;
     private boolean showHome = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        //Create and Initialize the database
+        myDb = new DatabaseHelper(this);
+        myDb.insertData("HOME", -37.8, 145.0);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -84,13 +91,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Button settingsbtn = (Button) findViewById(R.id.button_settings);
 
+
         settingsbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMap.clear();
                 showHome = false;
                 Intent intent = new Intent(MapsActivity.this, MapSettingsActivity.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
             }
         });
 
@@ -101,10 +109,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (!showHome) {
                     Drawable myDrawable = getResources().getDrawable(R.drawable.home);
                     Bitmap myLogo = ((BitmapDrawable) myDrawable).getBitmap();
+
+                    Cursor res = myDb.getAllData();
+
+                    while (res.moveToNext()) {
+                        //String name = res.getString(0);
+                        homelatitude = res.getDouble(1);
+                        homelongitude = res.getDouble(2);
+                    }
+
                     Home = new LatLng(homelatitude, homelongitude);
-                    Toast.makeText(MapsActivity.this, "Home navigation starts",Toast.LENGTH_SHORT).show();
-                    Log.d("location",Double.toString(homelatitude));
-                    Log.d("location",Double.toString(homelongitude));
+                    Toast.makeText(MapsActivity.this, "Home navigation starts", Toast.LENGTH_SHORT).show();
 //                    Log.d(String.format("location: %f",homelatitude));
                     myLogo = Bitmap.createScaledBitmap(myLogo, myLogo.getWidth() / 3, myLogo.getHeight() / 3, false);
                     mMap.addMarker(new MarkerOptions()
@@ -243,7 +258,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 data = downloadUrl(url[0]);
                 //Log.d("Background Task data", data.toString());
             } catch (Exception e) {
-               // Log.d("Background Task", e.toString());
+                // Log.d("Background Task", e.toString());
             }
             return data;
         }
@@ -379,7 +394,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,13.8f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.8f));
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -457,23 +472,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // other 'case' lines to check for other permissions this app might request.
             // You can add here other case statements according to your requirement.
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 0 && resultCode == 0) {
-
-            Bundle LocationBuddle = data.getExtras();
-            homelatitude = LocationBuddle.getDouble("latitude");
-            homelongitude = LocationBuddle.getDouble("longitude");
-            Log.d("location", Double.toString(homelatitude) + Double.toString(homelongitude));
-        }
-
-        else if (requestCode == 0 && resultCode == 1) {
-            homelatitude = Home.latitude;
-            homelongitude = Home.longitude;
-            Log.d("location", Double.toString(homelatitude) + Double.toString(homelongitude));
-        }
-
     }
 }
