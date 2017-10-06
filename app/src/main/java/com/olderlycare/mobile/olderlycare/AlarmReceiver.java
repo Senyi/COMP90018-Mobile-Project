@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.olderlycare.mobile.olderlycare.data.Item;
-
 /**
  * Created by aquila on 4/10/2017.
  */

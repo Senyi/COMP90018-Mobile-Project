@@ -75,8 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Create and Initialize the database
         myDb = new DatabaseHelper(this);
         myDb.insertData("HOME", -37.8, 145.0);
-        myDb.insertData("ELDERLY", -37.8, 145.0);
-        myDb.insertData("CARER", -37.8, 145.0);
+
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -117,9 +116,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Cursor res = myDb.getAllData();
 
                     while (res.moveToNext()) {
-                        //String name = res.getString(0);
-                        homelatitude = res.getDouble(1);
-                        homelongitude = res.getDouble(2);
+                        if(res.getString(0).equals("HOME"))
+                        {
+                            //String name = res.getString(0);
+                            homelatitude = res.getDouble(1);
+                            homelongitude = res.getDouble(2);
+                        }
                     }
 
                     Home = new LatLng(homelatitude, homelongitude);

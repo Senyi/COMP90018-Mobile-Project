@@ -120,7 +120,6 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
         // retrieve info from JSON objects
         Item item = channel.getItem();
 
-
         // initiating icons
         int resourceID = getResources().getIdentifier("drawable/icon_"+ item.getCondition().getCode(),null, getPackageName());
         Drawable icon = getResources().getDrawable(resourceID,null);
