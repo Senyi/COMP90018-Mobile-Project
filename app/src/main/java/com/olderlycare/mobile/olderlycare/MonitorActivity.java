@@ -5,11 +5,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -34,21 +32,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Date;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MonitorActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -61,22 +50,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
-    LatLng Home;
-    double homelatitude;
-    double homelongitude;
-    double userlatitude;
-    double userlongitude;
-    private boolean showHome = false;
+    LatLng Elderly;
+
+    double elderlylatitude;
+    double elderlylongitude;
+    private boolean showLocation = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_monitor);
 
         //Create and Initialize the database
         myDb = new DatabaseHelper(this);
-        myDb.insertData("HOME", -37.8, 145.0);
+        myDb.insertData("ELDERLY", -37.8, 145.0);
 
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -92,69 +80,64 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
 
-        Button homebtn = (Button) findViewById(R.id.button_home);
+        Button monitorbtn = (Button) findViewById(R.id.button_monitor);
+        Button settingsbtn = (Button) findViewById(R.id.button_settings);
 
-//        Button settingsbtn = (Button) findViewById(R.id.button_settings);
-//
-//
-//        settingsbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mMap.clear();
-//                showHome = false;
-//                Intent intent = new Intent(MapsActivity.this, MapSettingsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
 
-        homebtn.setOnClickListener(new View.OnClickListener() {
+        settingsbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMap.clear();
+                showLocation = false;
+                Intent intent = new Intent(MonitorActivity.this, MapSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        monitorbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!showHome) {
-                    Drawable myDrawable = getResources().getDrawable(R.drawable.home);
-                    Bitmap myLogo = ((BitmapDrawable) myDrawable).getBitmap();
+                if (!showLocation) {
+                    String currentDateTimeString = DateFormat.getTimeInstance(DateFormat.SHORT)
+                            .format(new Date());
+                    Drawable myDrawable = getResources().getDrawable(R.drawable.elderly);
+                    Bitmap elderlyLogo = ((BitmapDrawable) myDrawable).getBitmap();
 
                     Cursor res = myDb.getAllData();
 
                     while (res.moveToNext()) {
-                        if(res.getString(0).equals("HOME"))
-                        {
+                        if (res.getString(0).equals("ELDERLY")) {
                             //String name = res.getString(0);
-                            homelatitude = res.getDouble(1);
-                            homelongitude = res.getDouble(2);
+                            elderlylatitude = res.getDouble(1);
+                            elderlylongitude = res.getDouble(2);
                         }
                     }
 
-                    Home = new LatLng(homelatitude, homelongitude);
-                    Toast.makeText(MapsActivity.this, "Home navigation starts", Toast.LENGTH_SHORT).show();
+                    Elderly = new LatLng(elderlylatitude, elderlylongitude);
+                    Toast.makeText(MonitorActivity.this, currentDateTimeString, Toast.LENGTH_SHORT).show();
+
 //                    Log.d(String.format("location: %f",homelatitude));
-                    myLogo = Bitmap.createScaledBitmap(myLogo, myLogo.getWidth() / 3, myLogo.getHeight() / 3, false);
+                    elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3, elderlyLogo.getHeight() / 3, false);
                     mMap.addMarker(new MarkerOptions()
-                            .position(Home)
-                            .title("Your Home is Here! ")
-                            .icon(BitmapDescriptorFactory.fromBitmap(myLogo)));
+                            .position(Elderly)
+                            .title("Your Parent is Here! " + currentDateTimeString)
+                            .icon(BitmapDescriptorFactory.fromBitmap(elderlyLogo)));
                     //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
                     onLocationChanged(mLastLocation);
-                    LatLng origin = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    LatLng dest = Home;
-                    // Getting URL to the Google Directions API
-                    String url = getUrl(origin, dest);
-                    //Log.d("GoHomeButtonClick", url.toString());
-                    FetchUrl FetchUrl = new FetchUrl();
-
-                    // Start downloading json data from Google Directions API
-                    FetchUrl.execute(url);
-                    showHome = true;
+                    showLocation = true;
 
                 } else {
                     mMap.clear();
-                    showHome = false;
+                    showLocation = false;
                 }
             }
 
         });
-        NavigationView navi = (NavigationView)findViewById(R.id.navi_map);
+
+
+
+        NavigationView navi = (NavigationView)findViewById(R.id.navi_monitor);
         navi.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -162,28 +145,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 int itemId = item.getItemId();
                 switch (itemId){
                     case R.id.nav_settings:
-                        Intent intent_settings = new Intent(MapsActivity.this, MonitorActivity.class);
-                        startActivity(intent_settings);
+//                        Intent intent_settings = new Intent(MonitorActivity.this, MonitorActivity.class);
+//                        startActivity(intent_settings);
                         break;
 
                     case R.id.nav_map:
-//                        Intent intent_map = new Intent(MapsActivity.this, MapsActivity.class);
-//                        startActivity(intent_map);
+                        Intent intent_map = new Intent(MonitorActivity.this, MapsActivity.class);
+                        startActivity(intent_map);
                         break;
                     case R.id.nav_medicine:
-                        Intent intent_med = new Intent(MapsActivity.this, ScheduleActivity.class);
+                        Intent intent_med = new Intent(MonitorActivity.this, ScheduleActivity.class);
                         startActivity(intent_med);
                         break;
                     case R.id.weather:
-                        Intent intent_wea = new Intent(MapsActivity.this, WeatherActivity.class);
+                        Intent intent_wea = new Intent(MonitorActivity.this, WeatherActivity.class);
                         startActivity(intent_wea);
                         break;
                 }
                 return true;
             }
         });
-
     }
+
 
 
     /**
@@ -212,176 +195,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setMyLocationEnabled(true);
         }
 
-    }
-
-    private String getUrl(LatLng origin, LatLng dest) {
-
-        // Origin of route
-        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-
-        // Destination of route
-        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-
-
-        // Sensor enabled
-        String sensor = "sensor=false";
-
-        // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
-
-        // Output format
-        String output = "json";
-
-        // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
-
-
-        return url;
-    }
-
-    /**
-     * A method to download json data from url
-     */
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try {
-            URL url = new URL(strUrl);
-
-            // Creating an http connection to communicate with url
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            // Connecting to url
-            urlConnection.connect();
-
-            // Reading data from url
-            iStream = urlConnection.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-            StringBuffer sb = new StringBuffer();
-
-            String line = "";
-            while ((line = br.readLine()) != null) {
-                sb.append(line);
-            }
-
-            data = sb.toString();
-            //Log.d("downloadUrl", data.toString());
-            br.close();
-
-        } catch (Exception e) {
-            //Log.d("Exception", e.toString());
-        } finally {
-            iStream.close();
-            urlConnection.disconnect();
-        }
-        return data;
-    }
-
-    // Fetches data from url passed
-    private class FetchUrl extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... url) {
-
-            // For storing data from web service
-            String data = "";
-
-            try {
-                // Fetching the data from web service
-                data = downloadUrl(url[0]);
-                //Log.d("Background Task data", data.toString());
-            } catch (Exception e) {
-                // Log.d("Background Task", e.toString());
-            }
-            return data;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            ParserTask parserTask = new ParserTask();
-
-            // Invokes the thread for parsing the JSON data
-            parserTask.execute(result);
-
-        }
-    }
-
-    /**
-     * A class to parse the Google Places in JSON format
-     */
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
-
-        // Parsing the data in non-ui thread
-        @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... jsonData) {
-
-            JSONObject jObject;
-            List<List<HashMap<String, String>>> routes = null;
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-                //Log.d("ParserTask", jsonData[0].toString());
-                DataParser parser = new DataParser();
-                //Log.d("ParserTask", parser.toString());
-
-                // Starts parsing data
-                routes = parser.parse(jObject);
-                //Log.d("ParserTask", "Executing routes");
-                //Log.d("ParserTask", routes.toString());
-
-            } catch (Exception e) {
-                //Log.d("ParserTask", e.toString());
-                e.printStackTrace();
-            }
-            return routes;
-        }
-
-        // Executes in UI thread, after the parsing process
-        @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList<LatLng> points;
-            PolylineOptions lineOptions = null;
-
-            // Traversing through all the routes
-            for (int i = 0; i < result.size(); i++) {
-                points = new ArrayList<>();
-                lineOptions = new PolylineOptions();
-
-                // Fetching i-th route
-                List<HashMap<String, String>> path = result.get(i);
-
-                // Fetching all the points in i-th route
-                for (int j = 0; j < path.size(); j++) {
-                    HashMap<String, String> point = path.get(j);
-
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lng = Double.parseDouble(point.get("lng"));
-                    LatLng position = new LatLng(lat, lng);
-
-                    points.add(position);
-                }
-
-                // Adding all the points in the route to LineOptions
-                lineOptions.addAll(points);
-                lineOptions.width(10);
-                lineOptions.color(Color.RED);
-
-                //Log.d("onPostExecute", "onPostExecute lineoptions decoded");
-
-            }
-
-            // Drawing polyline in the Google Map for the i-th route
-            if (lineOptions != null) {
-                mMap.addPolyline(lineOptions);
-            } else {
-                //Log.d("onPostExecute", "without Polylines drawn");
-            }
-        }
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -430,7 +243,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.8f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -509,7 +322,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // You can add here other case statements according to your requirement.
         }
     }
-
-
-
 }

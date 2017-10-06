@@ -58,6 +58,14 @@
 
         </activity>
 
+
+        <activity
+            android:name=".MonitorActivity"
+            android:label="Carer Monitor">
+
+        </activity>
+
+
         <activity android:name=".ScheduleSettingActivity"
             android:label="ScheduleSetting"
             android:theme="@style/AppTheme.NoActionBar">

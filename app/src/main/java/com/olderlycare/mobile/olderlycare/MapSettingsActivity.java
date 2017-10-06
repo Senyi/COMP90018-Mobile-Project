@@ -85,7 +85,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
                                                            @Override
                                                            public void onClick(DialogInterface dialogInterface, int i) {
                                                                Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                                               Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+                                                               Intent resultIntent = new Intent(MapSettingsActivity.this, MonitorActivity.class);
                                                                boolean isUpdate = myDb.updateData("HOME",homelatitude, homelongitude);
                                                                startActivity(resultIntent);
                                                                finish();
@@ -119,7 +119,7 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
             public void onClick(View v) {
 
                 Toast.makeText(MapSettingsActivity.this, "Home location is not changed!",Toast.LENGTH_SHORT).show();
-                Intent resultIntent = new Intent(MapSettingsActivity.this, MapsActivity.class);
+                Intent resultIntent = new Intent(MapSettingsActivity.this,  MonitorActivity.class);
                 startActivity(resultIntent);
                 finish();
             }

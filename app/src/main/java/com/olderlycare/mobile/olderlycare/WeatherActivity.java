@@ -125,6 +125,11 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
             public boolean onNavigationItemSelected(MenuItem item) {
                 int itemId = item.getItemId();
                 switch (itemId){
+                    case R.id.nav_settings:
+                        Intent intent_settings = new Intent(WeatherActivity.this, MonitorActivity.class);
+                        startActivity(intent_settings);
+                        break;
+
                     case R.id.nav_map:
                         Intent intent_map = new Intent(WeatherActivity.this, MapsActivity.class);
                         startActivity(intent_map);
