@@ -229,10 +229,10 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
 
-//        mLastLocation = location;
-//        if (mCurrLocationMarker != null) {
-//            mCurrLocationMarker.remove();
-//        }
+        mLastLocation = location;
+        if (mCurrLocationMarker != null) {
+            mCurrLocationMarker.remove();
+        }
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
