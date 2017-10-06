@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/nav_settings"
-        android:title="Settings"
+    <item android:id="@+id/nav_carer"
+        android:title="Carer"
         android:icon="@mipmap/icon_settings"/>
 
     <item android:id="@+id/nav_map"

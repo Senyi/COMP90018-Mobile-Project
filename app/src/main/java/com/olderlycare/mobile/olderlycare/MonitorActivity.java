@@ -81,7 +81,7 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
 
 
         Button monitorbtn = (Button) findViewById(R.id.button_monitor);
-        Button settingsbtn = (Button) findViewById(R.id.button_settings);
+        Button settingsbtn = (Button) findViewById(R.id.button_homelocation);
 
 
         settingsbtn.setOnClickListener(new View.OnClickListener() {
@@ -144,9 +144,9 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
             public boolean onNavigationItemSelected(MenuItem item) {
                 int itemId = item.getItemId();
                 switch (itemId){
-                    case R.id.nav_settings:
-//                        Intent intent_settings = new Intent(MonitorActivity.this, MonitorActivity.class);
-//                        startActivity(intent_settings);
+                    case R.id.nav_carer:
+//                        Intent intent_carer = new Intent(MonitorActivity.this, MonitorActivity.class);
+//                        startActivity(intent_carer);
                         break;
 
                     case R.id.nav_map:
@@ -229,10 +229,10 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     public void onLocationChanged(Location location) {
 
-        mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
+//        mLastLocation = location;
+//        if (mCurrLocationMarker != null) {
+//            mCurrLocationMarker.remove();
+//        }
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -240,7 +240,7 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
+//        mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12.0f));

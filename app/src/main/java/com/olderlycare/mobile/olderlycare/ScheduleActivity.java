@@ -79,9 +79,9 @@ public class ScheduleActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 int itemId = item.getItemId();
                 switch (itemId){
-                    case R.id.nav_settings:
-                        Intent intent_settings = new Intent(ScheduleActivity.this, MonitorActivity.class);
-                        startActivity(intent_settings);
+                    case R.id.nav_carer:
+                        Intent intent_carer = new Intent(ScheduleActivity.this, MonitorActivity.class);
+                        startActivity(intent_carer);
                         break;
 
                     case R.id.nav_map:
