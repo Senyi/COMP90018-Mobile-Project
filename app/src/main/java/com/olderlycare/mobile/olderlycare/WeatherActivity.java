@@ -5,9 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -113,6 +115,32 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
         dialog.show();
 
         service.refreshWeather("Melbourne, Australia");
+
+
+
+        NavigationView navi = (NavigationView)findViewById(R.id.navi_wea);
+        navi.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId){
+                    case R.id.nav_map:
+                        Intent intent_map = new Intent(WeatherActivity.this, MapsActivity.class);
+                        startActivity(intent_map);
+                        break;
+                    case R.id.nav_medicine:
+                        Intent intent_med = new Intent(WeatherActivity.this, ScheduleActivity.class);
+                        startActivity(intent_med);
+                        break;
+                    case R.id.weather:
+//                        Intent intent_wea = new Intent(WeatherActivity.this, WeatherActivity.class);
+//                        startActivity(intent_wea);
+                        break;
+                }
+                return true;
+            }
+        });
     }
     @Override
     public void serviceSuccess(Channel channel){

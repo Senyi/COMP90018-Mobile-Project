@@ -12,9 +12,11 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -151,6 +153,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             }
 
+        });
+        NavigationView navi = (NavigationView)findViewById(R.id.navi_map);
+        navi.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int itemId = item.getItemId();
+                switch (itemId){
+                    case R.id.nav_map:
+//                        Intent intent_map = new Intent(MapsActivity.this, MapsActivity.class);
+//                        startActivity(intent_map);
+                        break;
+                    case R.id.nav_medicine:
+                        Intent intent_med = new Intent(MapsActivity.this, ScheduleActivity.class);
+                        startActivity(intent_med);
+                        break;
+                    case R.id.weather:
+                        Intent intent_wea = new Intent(MapsActivity.this, WeatherActivity.class);
+                        startActivity(intent_wea);
+                        break;
+                }
+                return true;
+            }
         });
 
     }
@@ -479,4 +504,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // You can add here other case statements according to your requirement.
         }
     }
+
+
+
 }

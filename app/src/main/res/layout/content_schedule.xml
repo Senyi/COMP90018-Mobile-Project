@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id = "@+id/schedule_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:dividerPadding="10dp"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.olderlycare.mobile.olderlycare.ScheduleActivity"
+    tools:showIn="@layout/activity_schedule">
+    <ListView
+        android:id="@+id/list_test"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+    <!--
+    <TableRow>
+        <TextView />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登陆"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出"/>
+        <TextView />
+    </TableRow>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="120px"
+        android:gravity="center_vertical|left"
+        android:text="12:00      Asprin * 1"></TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="120px"
+        android:gravity="center_vertical|left"
+        android:text="18:00      Asprin * 1"></TextView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#000000" />
+    -->
+</LinearLayout>

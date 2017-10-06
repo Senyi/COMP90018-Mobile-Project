@@ -76,4 +76,6 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="no_mark_place">THERE IS NO MARK PLACE</string>
     <string name="save_location">save location</string>
+
+    <string name="action_settings">Add new notification</string>
 </resources>

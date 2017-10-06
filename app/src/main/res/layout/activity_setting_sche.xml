@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.olderlycare.mobile.olderlycare.ScheduleSettingActivity">
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Add new Notification"/>
+
+    <Button
+        android:id="@+id/btnSetClock"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Set the clock"
+        />
+
+    <TextView
+        android:id="@+id/txtClockNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set the notification on: "
+        />
+
+    <EditText
+        android:id="@+id/edtSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Input the schedule here"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Press to record"/>
+
+    <Button
+        android:id="@+id/btnRecord"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Press to record"
+        />
+
+    <Button
+        android:id="@+id/btnOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"/>
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        />
+
+</LinearLayout>

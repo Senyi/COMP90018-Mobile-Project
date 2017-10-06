@@ -10,7 +10,7 @@
         android:icon="@mipmap/icon_map"/>
 
     <item android:id="@+id/nav_medicine"
-        android:title="Safe go home"
+        android:title="Medicine"
         android:icon="@mipmap/icon_medicine"/>
 
     <item android:id="@+id/weather"
