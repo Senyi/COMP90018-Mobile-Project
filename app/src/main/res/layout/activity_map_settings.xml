@@ -12,7 +12,9 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="500dp"
-        tools:context="com.olderlycare.mobile.olderlycare.MapSettingsActivity"/>
+        tools:context="com.olderlycare.mobile.olderlycare.MapSettingsActivity"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"

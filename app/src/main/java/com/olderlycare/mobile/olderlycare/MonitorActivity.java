@@ -12,8 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +39,15 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MonitorActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MonitorActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
 
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
     DatabaseHelper myDb;
     private GoogleMap mMap;
     ArrayList<LatLng> MarkerPoints;
@@ -61,6 +66,13 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor);
+
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout_monitor);
+        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Create and Initialize the database
         myDb = new DatabaseHelper(this);
@@ -111,14 +123,17 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
                             //String name = res.getString(0);
                             elderlylatitude = res.getDouble(1);
                             elderlylongitude = res.getDouble(2);
+                            
                         }
                     }
 
                     Elderly = new LatLng(elderlylatitude, elderlylongitude);
-                    Toast.makeText(MonitorActivity.this, currentDateTimeString, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MonitorActivity.this, currentDateTimeString,
+                            Toast.LENGTH_SHORT).show();
 
 //                    Log.d(String.format("location: %f",homelatitude));
-                    elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3, elderlyLogo.getHeight() / 3, false);
+                    elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3,
+                            elderlyLogo.getHeight() / 3, false);
                     mMap.addMarker(new MarkerOptions()
                             .position(Elderly)
                             .title("Your Parent is Here! " + currentDateTimeString)
@@ -145,8 +160,6 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
                 int itemId = item.getItemId();
                 switch (itemId){
                     case R.id.nav_carer:
-//                        Intent intent_carer = new Intent(MonitorActivity.this, MonitorActivity.class);
-//                        startActivity(intent_carer);
                         break;
 
                     case R.id.nav_map:
@@ -216,7 +229,8 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         }
 
     }
@@ -322,4 +336,14 @@ public class MonitorActivity extends FragmentActivity implements OnMapReadyCallb
             // You can add here other case statements according to your requirement.
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/nav_carer"
-        android:title="Carer"
+        android:title="Find Family Member"
         android:icon="@mipmap/icon_settings"/>
 
     <item android:id="@+id/nav_map"
-        android:title="Safe go home"
+        android:title="Find My Home"
         android:icon="@mipmap/icon_map"/>
 
     <item android:id="@+id/nav_medicine"
-        android:title="Medicine"
+        android:title="Medicine Reminder"
         android:icon="@mipmap/icon_medicine"/>
 
     <item android:id="@+id/weather"
-        android:title="Weather"
+        android:title="Weather Forecast"
         android:icon="@mipmap/icon_weather"/>
 
     <item android:id="@+id/logout"

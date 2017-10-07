@@ -14,8 +14,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -48,11 +50,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
 
     DatabaseHelper myDb;
     private GoogleMap mMap;
@@ -74,6 +78,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+
+
+        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawerlayout_map);
+        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //Create and Initialize the database
         myDb = new DatabaseHelper(this);
         myDb.insertData("HOME", -37.8, 145.0);
@@ -94,20 +109,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Button homebtn = (Button) findViewById(R.id.button_home);
 
-//        Button settingsbtn = (Button) findViewById(R.id.button_settings);
-//
-//
-//        settingsbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mMap.clear();
-//                showHome = false;
-//                Intent intent = new Intent(MapsActivity.this, MapSettingsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//
-
         homebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,16 +128,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                     Home = new LatLng(homelatitude, homelongitude);
-                    Toast.makeText(MapsActivity.this, "Home navigation starts", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this, "Home navigation starts",
+                            Toast.LENGTH_SHORT).show();
 //                    Log.d(String.format("location: %f",homelatitude));
-                    myLogo = Bitmap.createScaledBitmap(myLogo, myLogo.getWidth() / 3, myLogo.getHeight() / 3, false);
+                    myLogo = Bitmap.createScaledBitmap(myLogo, myLogo.getWidth() / 3,
+                            myLogo.getHeight() / 3, false);
                     mMap.addMarker(new MarkerOptions()
                             .position(Home)
                             .title("Your Home is Here! ")
                             .icon(BitmapDescriptorFactory.fromBitmap(myLogo)));
                     //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
                     onLocationChanged(mLastLocation);
-                    LatLng origin = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    LatLng origin = new LatLng(mLastLocation.getLatitude(),
+                            mLastLocation.getLongitude());
                     LatLng dest = Home;
                     // Getting URL to the Google Directions API
                     String url = getUrl(origin, dest);
@@ -280,6 +284,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return data;
     }
 
+
+
     // Fetches data from url passed
     private class FetchUrl extends AsyncTask<String, Void, String> {
 
@@ -314,7 +320,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * A class to parse the Google Places in JSON format
      */
-    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
+    private class ParserTask extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>>{
 
         // Parsing the data in non-ui thread
         @Override
@@ -403,7 +409,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         }
 
     }
@@ -420,6 +427,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+
+
 
         //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -511,5 +520,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

@@ -15,9 +15,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_care"
+        android:icon="@drawable/app_elderly"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_care"
+        android:roundIcon="@drawable/app_elderly"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -39,12 +39,13 @@
         </activity>
         <activity
             android:name=".MapSettingsActivity"
-            android:label="Map Settings">
+            android:label="Home Settings">
+
         </activity>
-        <activity android:name=".WeatherActivity"
 
-            android:label="Weather">
-
+        <activity
+            android:name=".WeatherActivity"
+            android:label="Weather Forecast">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -54,23 +55,22 @@
 
         <activity
             android:name=".ScheduleActivity"
-            android:label="Carer Monitor"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:label="Medicine Reminder">
         </activity>
 
 
         <activity
             android:name=".MonitorActivity"
-            android:label="Carer Monitor">
+            android:label="Find Family Member">
 
         </activity>
 
 
         <activity android:name=".ScheduleSettingActivity"
-            android:label="ScheduleSetting"
+            android:label="Medicine Setting"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
         <receiver android:name=".AlarmReceiver" android:process=":remote" />
 
 

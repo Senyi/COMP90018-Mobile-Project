@@ -73,44 +73,38 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         Button returnbtn = (Button) findViewById(R.id.button_return);
 
         savebtn.setOnClickListener(new View.OnClickListener() {
-                                       @Override
-                                       public void onClick(View v) {
-                                           if (ismarker) {
-                                               new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")//设置对话框标题
-
-                                                       .setMessage("Are you sure to set the green marker place as your new home location?")//设置显示的内容
-
-                                                       .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ismarker) {
+                    new AlertDialog.Builder(MapSettingsActivity.this).setTitle("Alarm")
+                            .setMessage("Are you sure to set the new home location?")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                                                            @Override
                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                               Toast.makeText(MapSettingsActivity.this, "Successful", Toast.LENGTH_SHORT).show();
-                                                               Intent resultIntent = new Intent(MapSettingsActivity.this, MonitorActivity.class);
-                                                               boolean isUpdate = myDb.updateData("HOME",homelatitude, homelongitude);
-                                                               startActivity(resultIntent);
-                                                               finish();
-
-                                                           }
+                            Toast.makeText(MapSettingsActivity.this, "Successful",
+                                    Toast.LENGTH_SHORT).show();
+                            Intent resultIntent = new Intent(MapSettingsActivity.this,
+                                    MonitorActivity.class);
+                            boolean isUpdate = myDb.updateData("HOME",homelatitude, homelongitude);
+                            startActivity(resultIntent);
+                            finish();}
                                                        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
 
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
+                             Log.i("alertdialog", " Please save the home location");
+                         }}).show();
+                }
 
-                                                   @Override
+                else
+                {
+                    Toast.makeText(MapSettingsActivity.this, "You must choose one location!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
 
-                                                   public void onClick(DialogInterface dialog, int which) {
-
-                                                       Log.i("alertdialog", " Please save the home location");
-
-                                                   }
-
-                                               }).show();
-                                           }
-                                           else
-                                           {
-                                               Toast.makeText(MapSettingsActivity.this, "You must choose one location!", Toast.LENGTH_SHORT).show();
-                                           }
-                                       }
-
-                                   });
+        });
 
 
 
@@ -118,7 +112,8 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MapSettingsActivity.this, "Home location is not changed!",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MapSettingsActivity.this, "Home location is not changed!",
+                        Toast.LENGTH_SHORT).show();
                 Intent resultIntent = new Intent(MapSettingsActivity.this,  MonitorActivity.class);
                 startActivity(resultIntent);
                 finish();
@@ -217,7 +212,8 @@ public class MapSettingsActivity extends FragmentActivity implements OnMapReadyC
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                    mLocationRequest, this);
         }
 
     }

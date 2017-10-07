@@ -4,11 +4,9 @@ package com.olderlycare.mobile.olderlycare;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.*;
+import java.util.Calendar;
 
 public class ScheduleSettingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -92,7 +90,8 @@ public class ScheduleSettingActivity extends AppCompatActivity implements View.O
                     calendar.set(Calendar.MILLISECOND, 0);
 //                    //Create the intent for the alarm
 //                    Intent intent = new Intent(ScheduleSettingActivity.this, AlarmReceiver.class);
-//                    PendingIntent pendingIntent = PendingIntent.getBroadcast(ScheduleSettingActivity.this, 0, intent, 0);
+//                    PendingIntent pendingIntent =
+//                          PendingIntent.getBroadcast(ScheduleSettingActivity.this, 0, intent, 0);
 //                    //Set up the alarm
 //                    AlarmManager am;
 //                    am = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -107,20 +106,24 @@ public class ScheduleSettingActivity extends AppCompatActivity implements View.O
             Intent intent = new Intent(ScheduleSettingActivity.this,AlarmReceiver.class);
             intent.putExtra("msg",edtSchedule.getText().toString());
             int flag = (int)System.currentTimeMillis();
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(ScheduleSettingActivity.this,flag,intent,0);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(ScheduleSettingActivity.this,
+                    flag,intent,0);
             AlarmManager am;
             am = (AlarmManager)getSystemService(ALARM_SERVICE);
             am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),pendingIntent);
             //Toast.makeText(this,intent.getStringExtra("msg"),Toast.LENGTH_LONG).show();
 
-            Intent intentToSchedule = new Intent(ScheduleSettingActivity.this,ScheduleActivity.class);
+            Intent intentToSchedule = new Intent(ScheduleSettingActivity.this,
+                    ScheduleActivity.class);
             intentToSchedule.putExtra("time",timeFormat);
             intentToSchedule.putExtra("am","AM");
             intentToSchedule.putExtra("sche",edtSchedule.getText().toString());
             startActivity(intentToSchedule);
         }
         if (v.getId() == R.id.btnCancel){
-
+            Intent intent = new Intent(ScheduleSettingActivity.this,ScheduleActivity.class);
+            startActivity(intent);
+            finish();
         }
 
 

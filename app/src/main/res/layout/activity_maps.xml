@@ -5,36 +5,39 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@color/colorPrimary"
-    >
+    android:id="@+id/drawerlayout_map">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <fragment android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="460dp"
+            tools:context="com.olderlycare.mobile.olderlycare.MapsActivity"
+            android:layout_above="@+id/linearLayout"
+            android:layout_alignParentStart="true" />
 
-    <fragment android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="460dp"
-        tools:context="com.olderlycare.mobile.olderlycare.MapsActivity"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
-
-        <Button android:id="@+id/button_home"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go Home"
-            android:textStyle="bold"
-            android:onClick="goHome"/>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/linearLayout">
 
-    </LinearLayout>
+            <Button android:id="@+id/button_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go Home"
+                android:textStyle="bold"
+                android:onClick="goHome"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView
@@ -45,6 +48,5 @@
         android:layout_gravity = "start">
 
     </android.support.design.widget.NavigationView>
-
 
 </android.support.v4.widget.DrawerLayout>
