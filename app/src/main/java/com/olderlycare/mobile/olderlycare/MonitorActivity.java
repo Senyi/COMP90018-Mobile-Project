@@ -93,7 +93,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         Button monitorbtn = (Button) findViewById(R.id.button_monitor);
-        Button settingsbtn = (Button) findViewById(R.id.button_homelocation);
+        Button settingsbtn = (Button) findViewById(R.id.button_settings);
 
 
         settingsbtn.setOnClickListener(new View.OnClickListener() {

@@ -30,14 +30,14 @@
             <Button android:id="@+id/button_monitor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monitor"
+                android:text="Family Member"
                 android:textStyle="bold"
                 android:onClick="monitor"/>
 
-            <Button android:id="@+id/button_homelocation"
+            <Button android:id="@+id/button_settings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HOME LOCATION"
+                android:text="Settings"
                 android:textStyle="bold" />
 
         </LinearLayout>
