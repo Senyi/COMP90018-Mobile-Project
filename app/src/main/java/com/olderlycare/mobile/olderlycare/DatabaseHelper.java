@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by eason on 2017/9/29.
  */
 
-
+// This is the database of home location
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "DATABASE.db";
     public static final String TABLE_NAME = "home_table";
@@ -37,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //Insert data function
     public boolean insertData(String name, Double latitude, Double longitude) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -50,12 +51,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    //Get data function
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
         return res;
     }
 
+    //update data function
     public boolean updateData(String name, Double latitude, Double longitude) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -65,6 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    //delete data function
     public Integer deleteData (String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_NAME, "NAME = ?",new String[] {name});

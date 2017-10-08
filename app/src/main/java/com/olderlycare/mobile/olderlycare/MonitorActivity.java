@@ -497,6 +497,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
+    //Get the location data from AZURE
     private void testGetAll () throws ExecutionException, InterruptedException
     {
         AsyncTask<Void,Void,Void> task = new AsyncTask<Void, Void, Void>() {
@@ -519,15 +520,12 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                     }
                     String ss[] = res.get(findIndex).getText().split(",");
 
-                    final String l1 = ss[1];
-                    final String l2 = ss[2];
+                    final String latitude = ss[1];
+                    final String longitude = ss[2];
 
                     runOnUiThread(new Runnable() {
                                       @Override
                                       public void run() {
-                                          Toast.makeText(getBaseContext(),l1+","+l2,Toast.
-                                                  LENGTH_SHORT).show();
-
                                           if (!showLocation) {
                                               String currentDateTimeString = DateFormat.
                                                       getTimeInstance(DateFormat.SHORT)
@@ -539,8 +537,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
                                               Cursor res = myDb.getAllData();
 
-                                                      elderlylatitude = Double.parseDouble(l1);
-                                                      elderlylongitude = Double.parseDouble(l2);
+                                                      elderlylatitude = Double.parseDouble(latitude);
+                                                      elderlylongitude = Double.parseDouble(longitude);
 
                                               Elderly = new LatLng(elderlylatitude, elderlylongitude);
 
@@ -581,7 +579,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
     private void myDebug(List<ToDoItem> items){
         for(int i=0; i<items.size();i++)
         {
-            Log.d("Data from the server", String.format("Id : %d, content: %s", i,items.get(i).getText()));
+            Log.d("Data from the server", String.format("Id : %d, content: %s",
+                    i,items.get(i).getText()));
         }
     }
 }

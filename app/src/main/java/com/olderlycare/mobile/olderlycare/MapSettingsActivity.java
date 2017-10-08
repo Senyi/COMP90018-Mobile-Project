@@ -177,7 +177,8 @@ public class MapSettingsActivity extends AppCompatActivity implements OnMapReady
                  * For the start location, the color of marker is GREEN and
                  * for the end location, the color of marker is RED.
                  */
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                options.icon(BitmapDescriptorFactory.
+                        defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
 
                 // Add new marker to the Google Map Android API V2
@@ -185,7 +186,8 @@ public class MapSettingsActivity extends AppCompatActivity implements OnMapReady
                 HOME = MarkerPoints.get(0);
                 homelatitude = HOME.latitude;
                 homelongitude = HOME.longitude;
-                Log.d("Pointlocation",Double.toString(homelatitude)+Double.toString(homelongitude));
+                Log.d("Pointlocation",Double.toString(homelatitude)+Double.
+                        toString(homelongitude));
 
 
             }
@@ -236,7 +238,8 @@ public class MapSettingsActivity extends AppCompatActivity implements OnMapReady
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.
+                HUE_MAGENTA));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera

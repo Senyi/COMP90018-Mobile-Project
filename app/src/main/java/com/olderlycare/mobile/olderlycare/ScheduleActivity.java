@@ -26,12 +26,6 @@ public class ScheduleActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    //    private String[] times = new String[]{"08:00","12:30","18:00"};
-//    private String[] ams = new String[]{"AM","PM","PM"};
-//    private String[] sches = new String[]{
-//            "schedule1 schedule1",
-//            "schedule2 schedule2",
-//            "schedule3 schedule3"};
     private ArrayList<String> times = new ArrayList<String>();
     private ArrayList<String> ams = new ArrayList<String>();;
     private ArrayList<String> sches = new ArrayList<String>();;
@@ -49,16 +43,7 @@ public class ScheduleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialContents();
-//        Intent intent = getIntent();
-//        if (intent.getStringExtra("time") != null) {
-////            Toast.makeText(this, intent.getStringExtra("time"), Toast.LENGTH_SHORT).show();
-//            times.add(intent.getStringExtra("time"));
-//            ams.add(intent.getStringExtra("am"));
-//            sches.add(intent.getStringExtra("sche"));
-//            Log.d("myDebug_time", intent.getStringExtra("time"));
-//            Log.d("myDebug_am", intent.getStringExtra("am"));
-//            Log.d("myDebug_sche", intent.getStringExtra("sche"));
-//        }
+
         //Create the contents of the adapter
         List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < times.size(); i++) {
@@ -75,13 +60,12 @@ public class ScheduleActivity extends AppCompatActivity {
         SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(), listitem,
                 R.layout.list_item, new String[]{"imgVoice", "time", "am", "sche", "imgDel"},
                 new int[]{R.id.imgVoice, R.id.time, R.id.am, R.id.scheTxt, R.id.imgDel});
-//        SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(),listitem,
-//                R.layout.list_item, new String[]{"imgVoice","imgDel"},
-//                new int[]{R.id.imgVoice,R.id.imgDel} );
+
+
         ListView listview = (ListView) findViewById(R.id.list_test);
         listview.setAdapter(myAdapter);
 
-
+        //The navigation drawer
         NavigationView navi = (NavigationView) findViewById(R.id.navi_med);
         navi.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
@@ -100,16 +84,15 @@ public class ScheduleActivity extends AppCompatActivity {
                         startActivity(intent_map);
                         break;
                     case R.id.nav_medicine:
-//                        Intent intent_med = new Intent(ScheduleActivity.this,
-//                          ScheduleActivity.class);
-//                        startActivity(intent_med);
                         break;
                     case R.id.weather:
-                        Intent intent_wea = new Intent(ScheduleActivity.this, WeatherActivity.class);
+                        Intent intent_wea = new Intent(ScheduleActivity.this,
+                                WeatherActivity.class);
                         startActivity(intent_wea);
                         break;
                     case R.id.logout:
-                        Intent intent_logout = new Intent(ScheduleActivity.this, LoginActivity.class);
+                        Intent intent_logout = new Intent(ScheduleActivity.this,
+                                LoginActivity.class);
                         Toast.makeText(ScheduleActivity.this, "Logout Successful",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(intent_logout);
@@ -119,6 +102,7 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
 
+        //The button for creating new medicine Alarm
         Button medicinebtn = (Button) findViewById(R.id.button_medicine);
 
         medicinebtn.setOnClickListener(new View.OnClickListener() {
@@ -129,33 +113,6 @@ public class ScheduleActivity extends AppCompatActivity {
             }
         });
     }
-
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            Toast.makeText(this,"jump to schedule setting",Toast.LENGTH_SHORT).show();
-//            Intent intent = new Intent(ScheduleActivity.this, ScheduleSettingActivity.class);
-//            startActivity(intent);
-//
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
@@ -168,17 +125,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
     private void initialContents() {
-//        times.add("8:00");
-//        ams.add("AM");
-//        sches.add("Aspirin 2 pills");
-//
-//        times.add("12:30");
-//        ams.add("PM");
-//        sches.add("VitaminC 3 pills");
-//
-//        times.add("21:00");
-//        ams.add("PM");
-//        sches.add("calcium 1 tablet");
 
         Cursor res = myDb.getAllData();
         while (res.moveToNext()){
@@ -187,7 +133,6 @@ public class ScheduleActivity extends AppCompatActivity {
             ams.add(res.getString(2));
             sches.add(res.getString(3));
         }
-
 
     }
 

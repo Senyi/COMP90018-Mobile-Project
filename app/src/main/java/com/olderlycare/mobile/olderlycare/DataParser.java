@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+//DataParser class aims to provide navigation to go home.
 public class DataParser {
 
 
@@ -36,7 +37,8 @@ public class DataParser {
                     /** Traversing all steps */
                     for(int k=0;k<jSteps.length();k++){
                         String polyline = "";
-                        polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
+                        polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).
+                                get("polyline")).get("points");
                         List<LatLng> list = decodePoly(polyline);
 
                         /** Traversing all points */
@@ -61,6 +63,7 @@ public class DataParser {
     }
 
 
+    //The navigation algorithm
     private List<LatLng> decodePoly(String encoded) {
 
         List<LatLng> poly = new ArrayList<>();
@@ -91,7 +94,6 @@ public class DataParser {
                     (((double) lng / 1E5)));
             poly.add(p);
         }
-
         return poly;
     }
 }

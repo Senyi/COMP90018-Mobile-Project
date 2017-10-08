@@ -160,7 +160,8 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
 //                        startActivity(intent_wea);
                         break;
                     case R.id.logout:
-                        Intent intent_logout = new Intent(WeatherActivity.this, LoginActivity.class);
+                        Intent intent_logout = new Intent(WeatherActivity.this,
+                                LoginActivity.class);
                         Toast.makeText(WeatherActivity.this, "Logout Successful",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(intent_logout);
@@ -309,6 +310,4 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
