@@ -35,45 +35,38 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".MapSettingsActivity"
-            android:label="Home Settings">
-
-        </activity>
-
+            android:label="Home Settings"></activity>
         <activity
             android:name=".WeatherActivity"
             android:label="Weather Forecast">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
         </activity>
-
         <activity
             android:name=".ScheduleActivity"
-            android:label="Medicine Reminder">
-        </activity>
-
-
+            android:label="Medicine Reminder"></activity>
         <activity
             android:name=".MonitorActivity"
-            android:label="Find Family Member">
-
-        </activity>
-
-
-        <activity android:name=".ScheduleSettingActivity"
+            android:label="Find Family Member"></activity>
+        <activity
+            android:name=".ScheduleSettingActivity"
             android:label="Medicine Setting"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <receiver
+            android:name=".AlarmReceiver"
+            android:process=":remote" />
+
+        <activity
+            android:name=".service.LoginActivity"
+            android:label="LOGIN">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-        <receiver android:name=".AlarmReceiver" android:process=":remote" />
-
-
     </application>
 
 </manifest>
