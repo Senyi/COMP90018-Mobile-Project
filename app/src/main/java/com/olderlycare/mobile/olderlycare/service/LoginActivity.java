@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.olderlycare.mobile.olderlycare.MapsActivity;
+import com.olderlycare.mobile.olderlycare.MonitorActivity;
 import com.olderlycare.mobile.olderlycare.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -41,13 +42,17 @@ public class LoginActivity extends AppCompatActivity {
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                Intent intentelderly = new Intent(LoginActivity.this, MapsActivity.class);
+                Intent intentcarer = new Intent(LoginActivity.this, MonitorActivity.class);
 
                 Toast.makeText(LoginActivity.this, "Login Successful",
                         Toast.LENGTH_SHORT).show();
-                intent.putExtra("usertype",usertype);
-                    startActivity(intent);
-
+                if(usertype.equals("ELDERLY")) {
+                    startActivity(intentelderly);
+                }
+                else if(usertype.equals("CARER")) {
+                    startActivity(intentcarer);
+                }
             }
         });
     }

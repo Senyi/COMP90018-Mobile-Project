@@ -60,7 +60,7 @@
 
         <activity
             android:name=".service.LoginActivity"
-            android:label="LOGIN">
+            android:label="CARER">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

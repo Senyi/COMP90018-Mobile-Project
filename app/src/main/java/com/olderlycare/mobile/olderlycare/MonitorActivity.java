@@ -223,7 +223,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         } catch (MalformedURLException e) {
-            createAndShowDialog(new Exception("There was an error creating the Mobile Service. Verify the URL"), "Error");
+            createAndShowDialog(new Exception("There was an error creating the Mobile Service."+
+                    " Verify the URL"), "Error");
         } catch (Exception e){
             createAndShowDialog(e, "Error");
         }
@@ -304,7 +305,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.
+                HUE_MAGENTA));
 //        mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
@@ -445,7 +447,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private AsyncTask<Void, Void, Void> initLocalStore() throws MobileServiceLocalStoreException, ExecutionException, InterruptedException {
+    private AsyncTask<Void, Void, Void> initLocalStore() throws MobileServiceLocalStoreException,
+            ExecutionException, InterruptedException {
 
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
@@ -457,7 +460,8 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                     if (syncContext.isInitialized())
                         return null;
 
-                    SQLiteLocalStore localStore = new SQLiteLocalStore(mClient.getContext(), "OfflineStore", null, 1);
+                    SQLiteLocalStore localStore = new SQLiteLocalStore(mClient.getContext(),
+                            "OfflineStore", null, 1);
 
                     Map<String, ColumnDataType> tableDefinition = new HashMap<String, ColumnDataType>();
                     tableDefinition.put("id", ColumnDataType.String);
@@ -495,15 +499,12 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
 
     private void testGetAll () throws ExecutionException, InterruptedException
     {
-        Toast.makeText(this,"test get all",Toast.LENGTH_SHORT).show();
-//        return null;
-//        return mToDoTable.where().field("complete").eq(val(false)).execute().get();
-
         AsyncTask<Void,Void,Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    final List<ToDoItem> res = mToDoTable.where().field("complete").eq(val(false)).execute().get();
+                    final List<ToDoItem> res = mToDoTable.where().field("complete").eq(val(false)).
+                            execute().get();
                     myDebug(res);
 
                     int findIndex = -1;
@@ -524,32 +525,35 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                     runOnUiThread(new Runnable() {
                                       @Override
                                       public void run() {
-                                          Toast.makeText(getBaseContext(),l1+","+l2,Toast.LENGTH_SHORT).show();
+                                          Toast.makeText(getBaseContext(),l1+","+l2,Toast.
+                                                  LENGTH_SHORT).show();
 
                                           if (!showLocation) {
-                                              String currentDateTimeString = DateFormat.getTimeInstance(DateFormat.SHORT)
+                                              String currentDateTimeString = DateFormat.
+                                                      getTimeInstance(DateFormat.SHORT)
                                                       .format(new Date());
-                                              Drawable myDrawable = getResources().getDrawable(R.drawable.elderly);
-                                              Bitmap elderlyLogo = ((BitmapDrawable) myDrawable).getBitmap();
+                                              Drawable myDrawable = getResources().
+                                                      getDrawable(R.drawable.elderly);
+                                              Bitmap elderlyLogo = ((BitmapDrawable) myDrawable).
+                                                      getBitmap();
 
                                               Cursor res = myDb.getAllData();
 
                                                       elderlylatitude = Double.parseDouble(l1);
                                                       elderlylongitude = Double.parseDouble(l2);
 
-
                                               Elderly = new LatLng(elderlylatitude, elderlylongitude);
-                                              Toast.makeText(MonitorActivity.this, currentDateTimeString,
-                                                      Toast.LENGTH_SHORT).show();
 
-//                    Log.d(String.format("location: %f",homelatitude));
-                                              elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3,
+                                              elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo,
+                                                      elderlyLogo.getWidth() / 3,
                                                       elderlyLogo.getHeight() / 3, false);
                                               mMap.addMarker(new MarkerOptions()
                                                       .position(Elderly)
-                                                      .title("Your Parent is Here! " + currentDateTimeString)
-                                                      .icon(BitmapDescriptorFactory.fromBitmap(elderlyLogo)));
-                                              //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
+                                                      .title("Your Parent is Here! " +
+                                                              currentDateTimeString)
+                                                      .icon(BitmapDescriptorFactory.
+                                                              fromBitmap(elderlyLogo)));
+
                                               onLocationChanged(mLastLocation);
                                               showLocation = true;
 
@@ -559,12 +563,7 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                                           }
                                       }
                                   }
-
-
                     );
-
-
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {

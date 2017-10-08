@@ -271,7 +271,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         } catch (MalformedURLException e) {
-            createAndShowDialog(new Exception("There was an error creating the Mobile Service. Verify the URL"), "Error");
+            createAndShowDialog(new Exception("There was an error creating the Mobile Service."+
+                    " Verify the URL"), "Error");
         } catch (Exception e){
             createAndShowDialog(e, "Error");
         }
@@ -534,9 +535,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         elderlylatitude = location.getLatitude();
         elderlylongitude = location.getLongitude();
 
-
-        Toast.makeText(MapsActivity.this, String.format("%f",elderlylatitude),
-                Toast.LENGTH_SHORT).show();
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13.8f));
 
@@ -676,7 +674,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
      * @throws ExecutionException
      * @throws InterruptedException
      */
-    private AsyncTask<Void, Void, Void> initLocalStore() throws MobileServiceLocalStoreException, ExecutionException, InterruptedException {
+    private AsyncTask<Void, Void, Void> initLocalStore() throws MobileServiceLocalStoreException,
+            ExecutionException, InterruptedException {
 
         AsyncTask<Void, Void, Void> task = new AsyncTask<Void, Void, Void>() {
             @Override
@@ -688,7 +687,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if (syncContext.isInitialized())
                         return null;
 
-                    SQLiteLocalStore localStore = new SQLiteLocalStore(mClient.getContext(), "OfflineStore", null, 1);
+                    SQLiteLocalStore localStore = new SQLiteLocalStore(mClient.getContext(),
+                            "OfflineStore", null, 1);
 
                     Map<String, ColumnDataType> tableDefinition = new HashMap<String, ColumnDataType>();
                     tableDefinition.put("id", ColumnDataType.String);
@@ -735,7 +735,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         double l1 = elderlylatitude;
         double l2 = elderlylongitude;
         item.setText(String.format("%d,%f,%f",id,l1,l2));
-        Log.d("Insert to server db:", String.format("%d,%f,%f",id,l1,l2));
         id++;
         item.setmComplete(false);
 
@@ -762,7 +761,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void testGetAll () throws ExecutionException, InterruptedException
     {
-        Toast.makeText(this,"test get all",Toast.LENGTH_SHORT).show();
 //        return null;
 //        return mToDoTable.where().field("complete").eq(val(false)).execute().get();
 
@@ -770,7 +768,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             protected Void doInBackground(Void... params) {
                 try {
-                    final List<ToDoItem> res = mToDoTable.where().field("complete").eq(val(false)).execute().get();
+                    final List<ToDoItem> res = mToDoTable.where().field("complete").
+                            eq(val(false)).execute().get();
                     myDebug(res);
 
                 } catch (InterruptedException e) {
@@ -791,7 +790,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private void myDebug(List<ToDoItem> items){
         for(int i=0; i<items.size();i++)
         {
-            Log.d("Data from the server", String.format("Id : %d, content: %s", i,items.get(i).getText()));
+            Log.d("Data from the server", String.format("Id : %d, content: %s",
+                    i,items.get(i).getText()));
         }
     }
 
