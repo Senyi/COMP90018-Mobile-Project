@@ -5,8 +5,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,10 +32,14 @@ public class ScheduleSettingActivity extends AppCompatActivity implements View.O
     Calendar calendar;
 
     String timeFormat;
+    String Am;
+
+    DBHelper myDb;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myDb = new DBHelper(this);
         setContentView(R.layout.activity_setting_sche);
         calendar = Calendar.getInstance();
         btnSetCalendar = (Button) findViewById(R.id.btnSetClock);
@@ -99,13 +105,33 @@ public class ScheduleSettingActivity extends AppCompatActivity implements View.O
                     timeFormat =  format(hour) + ":" + format(minute);
                     String txt = "Notificate at " + timeFormat;
                     txtNotificate.setText(txt);
+                    if(hour >= 12)
+                        Am = "PM";
+                    else
+                        Am = "AM";
+
                 }
             }, mHour, mMinute, true).show();
         }
         if (v.getId() == R.id.btnOK){
             Intent intent = new Intent(ScheduleSettingActivity.this,AlarmReceiver.class);
             intent.putExtra("msg",edtSchedule.getText().toString());
-            int flag = (int)System.currentTimeMillis();
+
+
+
+            myDb.insertData(timeFormat, Am, edtSchedule.getText().toString());
+            int flag = 0;
+            Cursor res = myDb.getAllData();
+            while (res.moveToNext()){
+                if(res.getString(1).equals(timeFormat))
+                {
+                    flag = res.getInt(0);
+                }
+            }
+            Log.d("mydebug_broadidtime",String.format("flag = %d, time = %s",flag,timeFormat));
+
+
+
             PendingIntent pendingIntent = PendingIntent.getBroadcast(ScheduleSettingActivity.this,
                     flag,intent,0);
             AlarmManager am;
@@ -116,7 +142,7 @@ public class ScheduleSettingActivity extends AppCompatActivity implements View.O
             Intent intentToSchedule = new Intent(ScheduleSettingActivity.this,
                     ScheduleActivity.class);
             intentToSchedule.putExtra("time",timeFormat);
-            intentToSchedule.putExtra("am","AM");
+            intentToSchedule.putExtra("am",Am);
             intentToSchedule.putExtra("sche",edtSchedule.getText().toString());
             startActivity(intentToSchedule);
         }

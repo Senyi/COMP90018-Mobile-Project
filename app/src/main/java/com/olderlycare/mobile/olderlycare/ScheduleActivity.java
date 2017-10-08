@@ -1,6 +1,7 @@
 package com.olderlycare.mobile.olderlycare;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -32,13 +33,13 @@ public class ScheduleActivity extends AppCompatActivity {
     private ArrayList<String> times = new ArrayList<String>();
     private ArrayList<String> ams = new ArrayList<String>();;
     private ArrayList<String> sches = new ArrayList<String>();;
-
+    DBHelper myDb;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
-
+        myDb = new DBHelper(this);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout_schedule);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -46,16 +47,16 @@ public class ScheduleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialContents();
-        Intent intent = getIntent();
-        if (intent.getStringExtra("time") != null) {
-//            Toast.makeText(this, intent.getStringExtra("time"), Toast.LENGTH_SHORT).show();
-            times.add(intent.getStringExtra("time"));
-            ams.add(intent.getStringExtra("am"));
-            sches.add(intent.getStringExtra("sche"));
-            Log.d("myDebug_time", intent.getStringExtra("time"));
-            Log.d("myDebug_am", intent.getStringExtra("am"));
-            Log.d("myDebug_sche", intent.getStringExtra("sche"));
-        }
+//        Intent intent = getIntent();
+//        if (intent.getStringExtra("time") != null) {
+////            Toast.makeText(this, intent.getStringExtra("time"), Toast.LENGTH_SHORT).show();
+//            times.add(intent.getStringExtra("time"));
+//            ams.add(intent.getStringExtra("am"));
+//            sches.add(intent.getStringExtra("sche"));
+//            Log.d("myDebug_time", intent.getStringExtra("time"));
+//            Log.d("myDebug_am", intent.getStringExtra("am"));
+//            Log.d("myDebug_sche", intent.getStringExtra("sche"));
+//        }
         //Create the contents of the adapter
         List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
         for (int i = 0; i < times.size(); i++) {
@@ -159,17 +160,27 @@ public class ScheduleActivity extends AppCompatActivity {
 
 
     private void initialContents() {
-        times.add("8:00");
-        ams.add("AM");
-        sches.add("Aspirin 2 pills");
+//        times.add("8:00");
+//        ams.add("AM");
+//        sches.add("Aspirin 2 pills");
+//
+//        times.add("12:30");
+//        ams.add("PM");
+//        sches.add("VitaminC 3 pills");
+//
+//        times.add("21:00");
+//        ams.add("PM");
+//        sches.add("calcium 1 tablet");
 
-        times.add("12:30");
-        ams.add("PM");
-        sches.add("VitaminC 3 pills");
+        Cursor res = myDb.getAllData();
+        while (res.moveToNext()){
+            int id = res.getInt(0);
+            times.add(res.getString(1));
+            ams.add(res.getString(2));
+            sches.add(res.getString(3));
+        }
 
-        times.add("21:00");
-        ams.add("PM");
-        sches.add("calcium 1 tablet");
+
     }
 
 }
