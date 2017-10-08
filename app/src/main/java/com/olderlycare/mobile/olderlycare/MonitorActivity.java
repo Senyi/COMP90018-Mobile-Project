@@ -153,42 +153,6 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                     e.printStackTrace();
                 }
 
-                if (!showLocation) {
-                    String currentDateTimeString = DateFormat.getTimeInstance(DateFormat.SHORT)
-                            .format(new Date());
-                    Drawable myDrawable = getResources().getDrawable(R.drawable.elderly);
-                    Bitmap elderlyLogo = ((BitmapDrawable) myDrawable).getBitmap();
-
-                    Cursor res = myDb.getAllData();
-
-                    while (res.moveToNext()) {
-                        if (res.getString(0).equals("ELDERLY")) {
-                            //String name = res.getString(0);
-                            elderlylatitude = res.getDouble(1);
-                            elderlylongitude = res.getDouble(2);
-                            
-                        }
-                    }
-
-                    Elderly = new LatLng(elderlylatitude, elderlylongitude);
-                    Toast.makeText(MonitorActivity.this, currentDateTimeString,
-                            Toast.LENGTH_SHORT).show();
-
-//                    Log.d(String.format("location: %f",homelatitude));
-                    elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3,
-                            elderlyLogo.getHeight() / 3, false);
-                    mMap.addMarker(new MarkerOptions()
-                            .position(Elderly)
-                            .title("Your Parent is Here! " + currentDateTimeString)
-                            .icon(BitmapDescriptorFactory.fromBitmap(elderlyLogo)));
-                    //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
-                    onLocationChanged(mLastLocation);
-                    showLocation = true;
-
-                } else {
-                    mMap.clear();
-                    showLocation = false;
-                }
             }
 
         });
@@ -562,6 +526,37 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                                       public void run() {
                                           Toast.makeText(getBaseContext(),l1+","+l2,Toast.LENGTH_SHORT).show();
 
+                                          if (!showLocation) {
+                                              String currentDateTimeString = DateFormat.getTimeInstance(DateFormat.SHORT)
+                                                      .format(new Date());
+                                              Drawable myDrawable = getResources().getDrawable(R.drawable.elderly);
+                                              Bitmap elderlyLogo = ((BitmapDrawable) myDrawable).getBitmap();
+
+                                              Cursor res = myDb.getAllData();
+
+                                                      elderlylatitude = Double.parseDouble(l1);
+                                                      elderlylongitude = Double.parseDouble(l2);
+
+
+                                              Elderly = new LatLng(elderlylatitude, elderlylongitude);
+                                              Toast.makeText(MonitorActivity.this, currentDateTimeString,
+                                                      Toast.LENGTH_SHORT).show();
+
+//                    Log.d(String.format("location: %f",homelatitude));
+                                              elderlyLogo = Bitmap.createScaledBitmap(elderlyLogo, elderlyLogo.getWidth() / 3,
+                                                      elderlyLogo.getHeight() / 3, false);
+                                              mMap.addMarker(new MarkerOptions()
+                                                      .position(Elderly)
+                                                      .title("Your Parent is Here! " + currentDateTimeString)
+                                                      .icon(BitmapDescriptorFactory.fromBitmap(elderlyLogo)));
+                                              //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Home, 13.8f));
+                                              onLocationChanged(mLastLocation);
+                                              showLocation = true;
+
+                                          } else {
+                                              mMap.clear();
+                                              showLocation = false;
+                                          }
                                       }
                                   }
 
