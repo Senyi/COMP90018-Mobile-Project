@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.olderlycare.mobile.olderlycare.service.LoginActivity;
 
 import org.json.JSONObject;
 
@@ -181,6 +182,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     case R.id.weather:
                         Intent intent_wea = new Intent(MapsActivity.this, WeatherActivity.class);
                         startActivity(intent_wea);
+                        break;
+                    case R.id.logout:
+                        Intent intent_logout = new Intent(MapsActivity.this, LoginActivity.class);
+                        startActivity(intent_logout);
+                        Toast.makeText(MapsActivity.this, "Logout Successful",
+                                Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;

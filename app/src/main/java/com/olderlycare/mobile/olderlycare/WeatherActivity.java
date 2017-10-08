@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.olderlycare.mobile.olderlycare.data.Channel;
 import com.olderlycare.mobile.olderlycare.data.Item;
+import com.olderlycare.mobile.olderlycare.service.LoginActivity;
 import com.olderlycare.mobile.olderlycare.service.YahooService;
 import com.olderlycare.mobile.olderlycare.service.ServiceCallback;
 
@@ -157,6 +158,12 @@ public class WeatherActivity extends AppCompatActivity implements ServiceCallbac
 //                        Intent intent_wea = new Intent(WeatherActivity.this,
 //                              WeatherActivity.class);
 //                        startActivity(intent_wea);
+                        break;
+                    case R.id.logout:
+                        Intent intent_logout = new Intent(WeatherActivity.this, LoginActivity.class);
+                        Toast.makeText(WeatherActivity.this, "Logout Successful",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(intent_logout);
                         break;
                 }
                 return true;

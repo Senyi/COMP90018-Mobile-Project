@@ -1,13 +1,17 @@
 package com.olderlycare.mobile.olderlycare.service;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.olderlycare.mobile.olderlycare.MapsActivity;
 import com.olderlycare.mobile.olderlycare.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -28,6 +32,20 @@ public class LoginActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(new SpinnerSelectedListener());
         spinner.setVisibility(View.VISIBLE);
+
+
+        Button loginbtn = (Button) findViewById(R.id.btn_login);
+
+
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+                Toast.makeText(LoginActivity.this, "Login Successful",
+                        Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
     }
 
 

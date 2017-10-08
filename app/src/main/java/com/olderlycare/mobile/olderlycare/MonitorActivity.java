@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.olderlycare.mobile.olderlycare.service.LoginActivity;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -173,6 +174,12 @@ public class MonitorActivity extends AppCompatActivity implements OnMapReadyCall
                     case R.id.weather:
                         Intent intent_wea = new Intent(MonitorActivity.this, WeatherActivity.class);
                         startActivity(intent_wea);
+                        break;
+                    case R.id.logout:
+                        Intent intent_logout = new Intent(MonitorActivity.this, LoginActivity.class);
+                        Toast.makeText(MonitorActivity.this, "Logout Successful",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(intent_logout);
                         break;
                 }
                 return true;

@@ -7,12 +7,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
+
+import com.olderlycare.mobile.olderlycare.service.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -105,6 +107,12 @@ public class ScheduleActivity extends AppCompatActivity {
                     case R.id.weather:
                         Intent intent_wea = new Intent(ScheduleActivity.this, WeatherActivity.class);
                         startActivity(intent_wea);
+                        break;
+                    case R.id.logout:
+                        Intent intent_logout = new Intent(ScheduleActivity.this, LoginActivity.class);
+                        Toast.makeText(ScheduleActivity.this, "Logout Successful",
+                                Toast.LENGTH_SHORT).show();
+                        startActivity(intent_logout);
                         break;
                 }
                 return true;
