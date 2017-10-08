@@ -16,6 +16,7 @@ import com.olderlycare.mobile.olderlycare.R;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public String usertype;
     private static final String[] m={"ELDERLY","CARER"};
     private TextView view ;
     private Spinner spinner;
@@ -41,9 +42,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+
                 Toast.makeText(LoginActivity.this, "Login Successful",
                         Toast.LENGTH_SHORT).show();
-                startActivity(intent);
+                intent.putExtra("usertype",usertype);
+                    startActivity(intent);
+
             }
         });
     }
@@ -54,6 +58,8 @@ public class LoginActivity extends AppCompatActivity {
         public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                    long arg3) {
             view.setText("USERTYPE："+m[arg2]);
+            usertype = m[arg2];
+
         }
 
         public void onNothingSelected(AdapterView<?> arg0) {

@@ -22,10 +22,10 @@ public class DBHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db) {
 //        db.execSQL("create table " + TABLE_NAME +" (NAME TEXT PRIMARY KEY,LATITUDE REAL,LONGITUDE REAL)");
-        Log.d("myDebug_ONCreate","START");
+//        Log.d("myDebug_ONCreate","START");
         db.execSQL("create table " + TABLE_NAME +" (ID integer PRIMARY KEY, TIME TEXT, AM TEXT, SCHE TEXT)");
         db.execSQL("create table " + "home_table" +" (NAME TEXT PRIMARY KEY,LATITUDE REAL,LONGITUDE REAL)");
-        Log.d("myDebug_ONCreate","END");
+//        Log.d("myDebug_ONCreate","END");
     }
     public boolean insertData(String time, String am,String sche) {
         SQLiteDatabase db = this.getWritableDatabase();
